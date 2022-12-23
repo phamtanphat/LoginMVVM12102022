@@ -32,10 +32,14 @@ public class MySharePref {
         editor.commit();
     }
 
-    public Triple<String, String, Boolean> getAccount() {
-        String account = sharedPreferences.getString("account", "");
-        String password = sharedPreferences.getString("password", "");
+    public Triple<String, String, Boolean> getAccountIsRemember() {
+        Triple<String, String, Boolean> triple = null;
         Boolean isRemember = sharedPreferences.getBoolean("isRemember", false);
-        return new Triple<>(account, password, isRemember);
+        if (isRemember) {
+            String account = sharedPreferences.getString("account", "");
+            String password = sharedPreferences.getString("password", "");
+            triple = new Triple<>(account, password, isRemember);
+        }
+        return triple;
     }
 }
