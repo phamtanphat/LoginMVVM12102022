@@ -21,18 +21,16 @@ public class AuthenticationRepository {
     public void signIn(String account, String password, boolean isRemember, OnCallBackSignIn onCallBackSignIn) {
         if (account.equals("phat") && password.equals("123")) {
             Triple<String, String, Boolean> triple = new Triple<>(account, password, isRemember);
-            mySharePref.saveAccount(triple);
             onCallBackSignIn.onSuccess(triple);
+            if (isRemember) {
+                mySharePref.saveAccount(triple);
+            }
             return;
         }
         onCallBackSignIn.onFail("Tài khoản không chính xác");
     }
 
-    public AccountEntity getAccountIsRemember() {
-        Triple<String, String, Boolean> tripleAccount = mySharePref.getAccountIsRemember();
-        if (tripleAccount != null) {
-            return new AccountEntity(tripleAccount.getFirst(), tripleAccount.getSecond(), tripleAccount.getThird());
-        }
-        return null;
+    public Triple<String, String, Boolean> getAccountIsRemember() {
+        return mySharePref.getAccountIsRemember();
     }
 }
