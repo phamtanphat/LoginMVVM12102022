@@ -1,18 +1,20 @@
 package com.example.loginmvvm12102022.presentation.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.loginmvvm12102022.R;
+import com.example.loginmvvm12102022.presentation.viewmodel.MainViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
     Button btnLogin;
     EditText edtAccount, edtPassword;
-
+    MainViewModel mainViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

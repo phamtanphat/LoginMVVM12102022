@@ -1,7 +1,10 @@
 package com.example.loginmvvm12102022.data.repository;
 
+import android.content.Context;
+
 import com.example.loginmvvm12102022.data.local.entities.AccountEntity;
 import com.example.loginmvvm12102022.data.local.sharepref.MySharePref;
+import com.example.loginmvvm12102022.utils.interfaces.OnCallBackSignIn;
 
 import kotlin.Triple;
 
@@ -11,10 +14,18 @@ import kotlin.Triple;
 public class AuthenticationRepository {
     private MySharePref mySharePref;
 
-    public void signIn(String account, String password, boolean isRemember) {
+    public AuthenticationRepository(Context context) {
+        mySharePref = MySharePref.getInstance(context);
+    }
+
+    public void signIn(String account, String password, boolean isRemember, OnCallBackSignIn onCallBackSignIn) {
         if (account.equals("phat") && password.equals("123")) {
-            mySharePref.saveAccount(new Triple<>(account, password, isRemember));
+            Triple<String, String, Boolean> triple = new Triple<>(account, password, isRemember);
+            mySharePref.saveAccount(triple);
+            onCallBackSignIn.onSuccess(triple);
+            return;
         }
+        onCallBackSignIn.onFail("Tài khoản không chính xác");
     }
 
     public AccountEntity getAccountIsRemember() {
